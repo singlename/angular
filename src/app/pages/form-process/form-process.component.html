@@ -1,0 +1,30 @@
+<form novalidate (ngSubmit)="onSubmit(lead)" [formGroup]="lead">
+    <label>
+        <span>Full name</span>
+        <input
+                type="text"
+                placeholder="Your full name"
+                formControlName="name">
+    </label>
+    <label>
+        <span>Email address</span>
+        <input
+                type="email"
+                placeholder="Your email address"
+                formControlName="email">
+    </label>
+    <label>
+        <span>Phone number</span>
+        <input
+                type="text"
+                placeholder="Phone number"
+                formControlName="phone">
+    </label>
+    <label>
+        <span>I agree to receive marketing spam</span>
+        <input
+                type="checkbox"
+                formControlName="consent">
+    </label>
+    <button type="submit">Next</button>
+</form>
