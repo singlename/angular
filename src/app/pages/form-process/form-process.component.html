@@ -1,4 +1,4 @@
-<form novalidate (ngSubmit)="onSubmit(lead)" [formGroup]="lead">
+<form class="content" novalidate (ngSubmit)="onSubmit(lead)" [formGroup]="lead">
     <label>
         <span>Full name</span>
         <input
@@ -45,11 +45,11 @@
             Mobile number format: +3706XXXXXXX
         </div>
     </label>
-    <label>
+    <label class="checkbox">
         <span>I agree to receive marketing spam</span>
         <input
                 type="checkbox"
                 formControlName="consent">
     </label>
-    <button type="submit" [disabled]="lead.invalid">Next</button>
+    <label class="button"><button type="submit" [disabled]="lead.invalid">Next</button></label>
 </form>

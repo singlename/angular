@@ -1,0 +1,28 @@
+.content {
+    max-width: 1000px;
+    margin: 30px auto;
+
+}
+
+.content span {
+    display:inline-block;
+    width: 150px;
+}
+
+label {
+    margin: 15px 336px;
+    display:block;
+}
+
+label.checkbox span {
+    width: 304px;
+}
+label.button {
+    text-align:right;
+}
+
+div.error {
+    text-align: right;
+    color: red;
+    font-size: 12px;
+}

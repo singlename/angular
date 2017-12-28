@@ -1,0 +1,20 @@
+ul.main-menu {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 0px;
+    margin-bottom: 100px;
+}
+
+ul.main-menu li {
+    list-style: none;
+    display: inline;
+    padding: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+ul.main-menu li a {
+    text-decoration: none;
+    color: #444aa0;
+}

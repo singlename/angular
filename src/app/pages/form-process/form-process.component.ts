@@ -12,6 +12,7 @@ export class FormProcessComponent implements OnInit {
   lead: FormGroup;
   onSubmit() {
     console.log(this.lead.value);
+    this.lead.reset();
   }
 
   constructor() { }
@@ -20,7 +21,7 @@ export class FormProcessComponent implements OnInit {
       this.lead = new FormGroup({
           name: new FormControl('', [Validators.required, Validators.minLength(5)]),
           email: new FormControl('', [Validators.required, Validators.email]),
-          phone: new FormControl('', [Validators.minLength(12), Validators.pattern("\\+3706[0-9]{7}")]),
+          phone: new FormControl('', [Validators.required, Validators.minLength(12), Validators.pattern("\\+3706[0-9]{7}")]),
           consent: new FormControl('')
       });
   }
