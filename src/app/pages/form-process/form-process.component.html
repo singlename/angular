@@ -5,6 +5,16 @@
                 type="text"
                 placeholder="Your full name"
                 formControlName="name">
+        <div
+                class="error"
+                *ngIf="lead.get('name').hasError('required') && lead.get('name').touched">
+            Name is required
+        </div>
+        <div
+                class="error"
+                *ngIf="lead.get('name').hasError('minlength') && lead.get('name').touched">
+            Minimum is 5 characters
+        </div>
     </label>
     <label>
         <span>Email address</span>
@@ -12,6 +22,11 @@
                 type="email"
                 placeholder="Your email address"
                 formControlName="email">
+        <div
+                class="error"
+                *ngIf="lead.get('email').hasError('email') && lead.get('email').touched">
+            Enter valid email address
+        </div>
     </label>
     <label>
         <span>Phone number</span>
@@ -19,6 +34,16 @@
                 type="text"
                 placeholder="Phone number"
                 formControlName="phone">
+        <div
+                class="error"
+                *ngIf="lead.get('phone').hasError('required') && lead.get('phone').touched">
+            Name is required
+        </div>
+        <div
+                class="error"
+                *ngIf="lead.get('phone').hasError('pattern') && lead.get('phone').touched">
+            Mobile number format: +3706XXXXXXX
+        </div>
     </label>
     <label>
         <span>I agree to receive marketing spam</span>
@@ -26,5 +51,5 @@
                 type="checkbox"
                 formControlName="consent">
     </label>
-    <button type="submit">Next</button>
+    <button type="submit" [disabled]="lead.invalid">Next</button>
 </form>
