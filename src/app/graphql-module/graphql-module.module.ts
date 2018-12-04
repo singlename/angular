@@ -5,11 +5,10 @@ import 'rxjs/add/observable/fromPromise';
 import {Apollo} from 'apollo-angular';
 import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import {observable} from 'rxjs/symbol/observable';
 
 const getHomeNode = gql`
   query getModeQuery{
-  nodeById(id: 1) {
+  nodeById(id: "1") {
     title
     entityPublished
     promote
@@ -23,7 +22,7 @@ const getHomeNode = gql`
 `;
 const getAboutUsNode = gql`
   query getModeQuery{
-  nodeById(id: 2) {
+  nodeById(id: "2") {
     title
     entityPublished
     promote
@@ -35,7 +34,7 @@ const getAboutUsNode = gql`
   }
 }
 `;
-const endpoint = 'http://d8myweb/graphql';
+const endpoint = 'http://mylandoapp.lndo.site:32792/graphql';
 
 @NgModule({
   imports: [
