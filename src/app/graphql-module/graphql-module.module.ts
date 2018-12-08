@@ -1,10 +1,11 @@
 import {Injectable, NgModule} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import gql from 'graphql-tag';
-import 'rxjs/add/observable/fromPromise';
-import {Apollo} from 'apollo-angular';
-import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { createPersistedQueryLink } from "apollo-link-persisted-queries";
+import {ApolloClient} from 'apollo-client';
+import gql from 'graphql-tag';
+import {createHttpLink} from 'apollo-link-http';
+import {JsonAstConstantTrue} from '@angular-devkit/core';
 
 const getHomeNode = gql`
   query getModeQuery{
@@ -34,7 +35,17 @@ const getAboutUsNode = gql`
   }
 }
 `;
+
 const endpoint = 'http://mylandoapp.lndo.site:32792/graphql';
+const link = createPersistedQueryLink({
+  useGETForHashedQueries: true
+})
+  .concat(createHttpLink({ uri: endpoint }));
+
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: link,
+});
 
 @NgModule({
   imports: [
@@ -45,25 +56,10 @@ const endpoint = 'http://mylandoapp.lndo.site:32792/graphql';
 @Injectable()
 export class GraphqlModule {
 
-    apollo: Apollo;
-
-    constructor(apollo: Apollo,
-                httpLink: HttpLink) {
-
-        this.apollo = apollo;
-        this.apollo.create({
-            link: httpLink.create({ uri: endpoint }),
-            cache: new InMemoryCache()
-        });
-    }
-
-    public graphqlCall(specificQuery: any): Promise<any> {
-        if (specificQuery === 'getHomeNode') {
-            return this.apollo.query({query: getHomeNode}).toPromise();
-        }
-        if (specificQuery === 'getAboutUsNode') {
-            return this.apollo.query({query: getAboutUsNode}).toPromise();
-        }
-    }
-
+  constructor() {
+    client.subscribe({query: getAboutUsNode, fetchPolicy: 'no-cache'})
+      .subscribe(result => {
+      console.log(result);
+    });
+  }
 }

@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {GraphqlModule} from './graphql-module/graphql-module.module';
 import {ApolloModule} from 'apollo-angular';
-import {HttpClientModule} from '@angular/common/http';
-import {HttpLinkModule} from 'apollo-angular-link-http';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -14,6 +12,8 @@ import {BrowserModule} from '@angular/platform-browser';
 import { MainMenuComponent } from './pages/main-menu/main-menu.component';
 import { FormProcessComponent } from './pages/form-process/form-process.component';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ApolloClient} from 'apollo-client';
+import {HttpLinkModule} from 'apollo-angular-link-http';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -35,9 +35,8 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     GraphqlModule,
-    ApolloModule,
-    HttpClientModule,
     HttpLinkModule,
+    ApolloModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule
   ],
