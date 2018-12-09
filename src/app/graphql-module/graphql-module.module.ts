@@ -1,51 +1,7 @@
 import {Injectable, NgModule} from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { createPersistedQueryLink } from "apollo-link-persisted-queries";
-import {ApolloClient} from 'apollo-client';
-import gql from 'graphql-tag';
-import {createHttpLink} from 'apollo-link-http';
-import {JsonAstConstantTrue} from '@angular-devkit/core';
-
-const getHomeNode = gql`
-  query getModeQuery{
-  nodeById(id: "1") {
-    title
-    entityPublished
-    promote
-    ... on NodeArticle {
-      body {
-        value
-      }
-    }
-  }
-}
-`;
-const getAboutUsNode = gql`
-  query getModeQuery{
-  nodeById(id: "2") {
-    title
-    entityPublished
-    promote
-    ... on NodePage {
-      body {
-        value
-      }
-    }
-  }
-}
-`;
-
-const endpoint = 'http://mylandoapp.lndo.site:32792/graphql';
-const link = createPersistedQueryLink({
-  useGETForHashedQueries: true
-})
-  .concat(createHttpLink({ uri: endpoint }));
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: link,
-});
+import {CommonModule} from '@angular/common';
+import './queries/queriesInterface';
+import {GraphqlFetchDataService} from '../services/graphql-fetch-data.service';
 
 @NgModule({
   imports: [
@@ -56,10 +12,34 @@ const client = new ApolloClient({
 @Injectable()
 export class GraphqlModule {
 
-  constructor() {
-    client.subscribe({query: getAboutUsNode, fetchPolicy: 'no-cache'})
-      .subscribe(result => {
-      console.log(result);
-    });
+  private apolloService;
+
+  constructor(private service: GraphqlFetchDataService) {
+    this.apolloService = service;
+  }
+
+  getQueryResult(operationName: string) {
+    return this.apolloService.getGraphqlQueryResult(operationName);
+  }
+
+  getGraphqlQueryResult(operationName: string) {
+
+    // let graphqlQuery = queries.queries[operationName];
+    //
+    // const link = createPersistedQueryLink({
+    //   generateHash: () => graphqlQuery.hash,
+    //   disable: () => true,
+    //   useGETForHashedQueries: true
+    // })
+    //   .concat(createHttpLink({uri: endpoint, useGETForQueries: true}));
+    // this.apolloClient.link = link;
+    //
+    // this.apolloClient.__requestRaw({
+    //   query: graphqlQuery.query,
+    //   operationName: operationName,
+    //
+    // }).subscribe(result => {
+    //   console.log(result);
+    // });
   }
 }

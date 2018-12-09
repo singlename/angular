@@ -18,10 +18,12 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.graphql.graphqlCall('getHomeNode').then(result => {
-    //   this.title = result.data.nodeById.title;
-    //   this.body = result.data.nodeById.body.value;
-    // });
+    this.graphql.getQueryResult('getModeQuery')
+      .subscribe(result => {
+        this.title = result.data.nodeById.title;
+        this.body = result.data.nodeById.body.value;
+    });
   }
+
 
 }

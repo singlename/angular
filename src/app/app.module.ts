@@ -12,7 +12,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import { MainMenuComponent } from './pages/main-menu/main-menu.component';
 import { FormProcessComponent } from './pages/form-process/form-process.component';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ApolloClient} from 'apollo-client';
+import {GraphqlFetchDataService} from './services/graphql-fetch-data.service';
 import {HttpLinkModule} from 'apollo-angular-link-http';
 
 const appRoutes: Routes = [
@@ -40,7 +40,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [GraphqlFetchDataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
