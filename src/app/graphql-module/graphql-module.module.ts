@@ -1,6 +1,8 @@
-import {Injectable, NgModule} from '@angular/core';
+import {Injectable, NgModule, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {GraphqlFetchDataService} from '../services/graphql-fetch-data.service';
+import {Apollo} from 'apollo-angular';
+import gql from 'graphql-tag';
 @NgModule({
   imports: [
     CommonModule

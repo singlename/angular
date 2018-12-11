@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {GraphqlModule} from './graphql-module/graphql-module.module';
-import {Apollo, APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
+import { APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
@@ -15,6 +15,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {GraphqlFetchDataService} from './services/graphql-fetch-data.service';
 import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
+import {HttpClientModule} from '@angular/common/http';
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -37,12 +38,25 @@ const appRoutes: Routes = [
     BrowserModule,
     GraphqlModule,
     HttpLinkModule,
+    HttpClientModule,
     ApolloModule,
     RouterModule.forRoot(appRoutes),
     ReactiveFormsModule
   ],
   providers: [
     GraphqlFetchDataService,
+    {
+      provide: APOLLO_OPTIONS,
+      useFactory(httpLink: HttpLink) {
+        return {
+          cache: new InMemoryCache(),
+          link: httpLink.create({
+            uri: "http://mylandoapp.lndo.site:32779/graphql"
+          })
+        }
+      },
+      deps: [HttpLink]
+    }
   ],
   bootstrap: [AppComponent]
 })
