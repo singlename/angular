@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
       .subscribe(result => {
         this.title = result.data.nodeById.title;
         this.body = result.data.nodeById.body.value;
-    });
+      });
   }
 
 

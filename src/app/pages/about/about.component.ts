@@ -22,6 +22,11 @@ export class AboutComponent implements OnInit {
         this.title = result.data.nodeById.title;
         this.body = result.data.nodeById.body.value;
       });
+    // this.graphql.getGraphqlQueryResultTest('getAboutUsNode')
+    //   .subscribe(result => {
+    //     this.title = result.data.nodeById.title;
+    //     this.body = result.data.nodeById.body.value;
+    //   });
 
   }
 
