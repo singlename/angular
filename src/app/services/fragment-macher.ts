@@ -1,5 +1,5 @@
 import {IntrospectionFragmentMatcher} from 'apollo-cache-inmemory';
-
+// @todo use fragments
 export const fragmentMacher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData: {
     __schema: {
@@ -8,7 +8,8 @@ export const fragmentMacher = new IntrospectionFragmentMatcher({
           kind: 'INTERFACE',
           name: 'Entity',
           possibleTypes: [
-            {name: 'NodePage'}
+            {name: 'NodePage'},
+            {name: 'NodeArticle'}
           ]
         }
       ]

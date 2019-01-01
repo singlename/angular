@@ -10,9 +10,11 @@ export const queries: graphqlQueries = {
           title
           entityPublished
           promote
+          __typename
           ... on NodeArticle {
             body {
               value
+              __typename
             }
           }
         }
@@ -27,9 +29,11 @@ export const queries: graphqlQueries = {
           title
           entityPublished
           promote
+          __typename
           ... on NodePage {
             body {
               value
+              __typename
             }
           }
         }

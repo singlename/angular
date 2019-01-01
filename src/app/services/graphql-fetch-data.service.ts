@@ -9,8 +9,9 @@ import gql from 'graphql-tag';
 import {HttpLink} from 'apollo-angular-link-http';
 import {ApolloLink, from, NextLink, Operation} from 'apollo-link';
 import {BatchHttpLink} from 'apollo-link-batch-http';
+import {Observable} from "apollo-client/util/Observable";
 
-const backend_endpoint = 'http://mylandoapp.lndo.site/graphql';
+const backend_endpoint = 'http://d8-wa.dd:8083/graphql';
 
 @Injectable()
 export class GraphqlFetchDataService {
@@ -23,56 +24,56 @@ export class GraphqlFetchDataService {
     private apollo: Apollo,
     private httpLink: HttpLink,
     private httpBatchLink: BatchHttpLink) {
-    // this.endpoint = 'http://mylandoapp.lndo.site:32779/graphql';
-    // this.cache = new InMemoryCache({
-    //   addTypename: true,
-    //   fragmentMatcher: fragmentMacher
-    // });
-    // this.apolloClient = new ApolloClient({
-    //   cache: this.cache,
-    //   link: createHttpLink({uri: this.endpoint, useGETForQueries: true}),
-    // });
 
     const cache = new InMemoryCache({
-      addTypename: true,
-      fragmentMatcher: fragmentMacher
+        //addTypename: true,
+        //fragmentMatcher: fragmentMacher
     });
 
     const persistedQueryLink: ApolloLink = createPersistedQueryLink({
-      useGETForHashedQueries: true
+      useGETForHashedQueries: false
     });
     const endpointHttpLink = this.httpLink.create({uri: backend_endpoint});
-    const endpointHttpBatchLink = this.httpBatchLink.concat(endpointHttpLink);
+    const endpointHttpBatchLink = new BatchHttpLink();
+    const queryBatchLink = endpointHttpLink.concat(endpointHttpBatchLink);
 
     const queryPostMiddleware: ApolloLink = new ApolloLink(
       (operation: Operation, forward: NextLink) => {
         const context = operation.getContext();
-        if (context.http.includeQuery && context.method !== 'GET') {
-          context.method = 'GET';
+        if (context.http.includeQuery && context.method !== 'POST') {
+          context.method = 'POST';
           operation.setContext(context);
         }
         return forward(operation);
       });
 
-    const link = from([persistedQueryLink, queryPostMiddleware, endpointHttpBatchLink]) as any;
+    const link = from([persistedQueryLink, queryPostMiddleware, queryBatchLink]) as any;
 
     this.apollo.create({
       link: link,
-      cache
+      cache,
+      connectToDevTools: true
     });
+  }
+
+  getGraphqlQuery(operationName: string) {
+    return queries.queries[operationName];
   }
 
   getGraphqlQueryResult(operationName: string) {
 
-    const graphqlQuery = queries.queries[operationName];
+    const graphqlQuery = this.getGraphqlQuery(operationName);
     const apolloClient = this.apollo.getClient();
-    const link = createPersistedQueryLink({
-      generateHash: () => graphqlQuery.hash,
-      disable: () => true,
-      useGETForHashedQueries: true
-    })
-      .concat(this.apollo.getClient().link);
-    apolloClient.link = link;
+
+    const cachedResponse = apolloClient.cache.read({
+      query: graphqlQuery.query,
+      optimistic: true,
+      rootId: operationName
+    });
+
+    if (cachedResponse) {
+      return Observable.of({data: cachedResponse, fromCache: true});
+    }
 
     return apolloClient.__requestRaw({
       query: graphqlQuery.query,
