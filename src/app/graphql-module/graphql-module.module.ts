@@ -1,6 +1,7 @@
-import {Injectable, NgModule, OnInit} from '@angular/core';
+import {Injectable, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {GraphqlFetchDataService} from '../services/graphql-fetch-data.service';
+import { introspectionQuery } from 'graphql';
 
 @NgModule({
   imports: [
@@ -25,7 +26,12 @@ export class GraphqlModule {
     return this.apolloService.getGraphqlQueryResult(operationName);
   }
 
-  cacheQueryResult(dataId: string, query: string, response: any) {
-    this.apolloService.apollo.getClient().cache.write({dataId: dataId, query: query, result: response});
+  cacheQueryResult(OperationName: string, response: any) {
+    const query = this.getQuery(OperationName).query;
+    this.apolloService.apollo.getClient().cache.write({
+      dataId: OperationName,
+      query: query,
+      result: response
+    });
   }
 }

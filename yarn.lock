@@ -819,6 +819,11 @@ apollo-link-http@^1.5.7:
     apollo-link "^1.2.4"
     apollo-link-http-common "^0.2.6"
 
+apollo-link-logger@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/apollo-link-logger/-/apollo-link-logger-1.2.3.tgz#1f3e6f7849ce7a7e3aa822141fe062cfa278b1e1"
+  integrity sha512-GaVwdHyXmawfvBlHfZkFkBHH3+YH7wibzSCc4/YpIbPVtbtZqi0Qop18w++jgpw385W083DMOdYe2eJsKkZdag==
+
 apollo-link-persisted-queries@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/apollo-link-persisted-queries/-/apollo-link-persisted-queries-0.2.2.tgz#156597cb259b7bb56cf4e967a7be0312954f4591"
@@ -857,11 +862,6 @@ apollo-utilities@1.0.26, apollo-utilities@^1.0.0, apollo-utilities@^1.0.26, apol
   integrity sha512-URw7o3phymliqYCYatcird2YRPUU2eWCNvip64U9gQrX56mEfK4m99yBIDCMTpmcvOFsKLii1sIEZsHIs/bvnw==
   dependencies:
     fast-json-stable-stringify "^2.0.0"
-
-apollographql@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/apollographql/-/apollographql-0.0.1.tgz#a037ea507fd284352f4ad512d22edb2c6120c82f"
-  integrity sha512-3bqhHxcmcsEp5fOKAKRScj27ouat0yh4LRadOd9j5NdpQ9pkZPqqO4NmZedjzmHdPl3xkCUjjlyXbuexPb3lAw==
 
 app-root-path@^2.1.0:
   version "2.1.0"

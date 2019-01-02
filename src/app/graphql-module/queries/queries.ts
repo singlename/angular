@@ -1,17 +1,17 @@
 import {graphqlQueries} from './queriesInterface';
-import gql from 'graphql-tag';
+import gql from "graphql-tag";
 
 export const queries: graphqlQueries = {
   queries: {
-    'getModeQuery': {
+    'getHomeNodeQuery': {
       query: gql`
-      query getModeQuery{
+      query getHomeNodeQuery{
         nodeById(id: "1") {
           title
           entityPublished
           promote
           __typename
-          ... on NodeArticle {
+        ... on NodeArticle {
             body {
               value
               __typename
@@ -20,7 +20,7 @@ export const queries: graphqlQueries = {
         }
       }
       `,
-      hash: '2ee89a6dc363df671fcf0722795b51a4e4d377a2'
+      hash: '901ce207b61b5e401bf57a9fdb2fae36f4a62568d0573707b55545258777b436'
     },
     'getAboutUsNode': {
       query: gql`
@@ -39,7 +39,7 @@ export const queries: graphqlQueries = {
         }
       }
       `,
-      hash: ''
+      hash: '',
     }
   }
 };
