@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {InMemoryCache} from 'apollo-cache-inmemory';
-import {queries} from '../graphql-module/queries/queries';
+import {queries, QueryParams} from '../graphql-module/queries/queries';
 import {createPersistedQueryLink} from 'apollo-link-persisted-queries';
 import {Apollo} from 'apollo-angular';
 import {createHttpLink} from 'apollo-link-http';
@@ -73,7 +73,7 @@ export class GraphqlFetchDataService {
     return queries.queries[operationName];
   }
 
-  getGraphqlQueryResult(operationName: string, params: Object) {
+  getGraphqlQueryResult(operationName: string, parametric: string, params: QueryParams) {
 
     const graphqlQuery = this.getGraphqlQuery(operationName);
     const apolloClient = this.apollo.getClient();
@@ -81,7 +81,7 @@ export class GraphqlFetchDataService {
     const cachedResponse = apolloClient.cache.read({
       query: graphqlQuery.query,
       optimistic: true,
-      rootId: operationName
+      rootId: operationName + parametric,
     });
 
     if (cachedResponse) {
@@ -93,7 +93,6 @@ export class GraphqlFetchDataService {
       operationName: operationName,
     };
     payload.variables = params;
-
     return apolloClient.__requestRaw(payload);
   }
 }

@@ -1,6 +1,11 @@
 import {graphqlQueries} from './queriesInterface';
 import gql from "graphql-tag";
 
+export interface QueryParams extends Object{
+  limit?: number,
+  offset?: number,
+}
+
 export const queries: graphqlQueries = {
   queries: {
     'getHomeNodeQuery': {

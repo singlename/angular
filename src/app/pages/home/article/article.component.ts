@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SafeHtml} from "@angular/platform-browser";
 
-interface Article{
+export interface Article{
   title: string,
   body: {summary: SafeHtml},
   created: number,
@@ -21,7 +21,6 @@ export class ArticleComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.article);
   }
 
 }
