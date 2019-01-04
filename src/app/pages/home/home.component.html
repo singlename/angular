@@ -1,2 +1,4 @@
 <h1>{{title}}</h1>
-<div class="content" [innerHTML]="body"></div>
+<div class="content" id="dynamicContent" (window:scroll)="onScroll($event)" #dynamicContent>
+    <app-article *ngFor="let article of articles | keyvalue" [article]="article.value"></app-article>
+</div>

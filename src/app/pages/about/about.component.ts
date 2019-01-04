@@ -19,7 +19,7 @@ export class AboutComponent implements OnInit {
   ngOnInit() {
 
     const OperationName = 'getAboutUsNode';
-    this.graphql.getQueryResult(OperationName)
+    this.graphql.getQueryResult(OperationName, {})
       .subscribe(result => {
         this.title = result.data.nodeById.title;
         this.body = result.data.nodeById.body.value;

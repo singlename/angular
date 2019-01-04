@@ -16,6 +16,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {HttpLinkModule} from 'apollo-angular-link-http';
 import {BatchHttpLink} from 'apollo-link-batch-http';
 import {GraphqlFetchDataService} from './services/graphql-fetch-data.service';
+import { ArticleComponent } from './pages/home/article/article.component';
+import {KeyValuePipe} from "@angular/common";
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     MainMenuComponent,
     FormProcessComponent,
+    ArticleComponent
   ],
   imports: [
     BrowserModule,

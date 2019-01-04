@@ -13,6 +13,7 @@ import gql from "graphql-tag";
 export class GraphqlDevModule {
 
   constructor() {
+    // @todo export queries to d8 though HTTP
     this.exportQueriesToJson();
   }
 

@@ -22,8 +22,8 @@ export class GraphqlModule {
     return this.apolloService.getGraphqlQuery(operationName);
   }
 
-  getQueryResult(operationName: string) {
-    return this.apolloService.getGraphqlQueryResult(operationName);
+  getQueryResult(operationName: string, params: Object) {
+    return this.apolloService.getGraphqlQueryResult(operationName, params);
   }
 
   cacheQueryResult(OperationName: string, response: any) {

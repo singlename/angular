@@ -20,7 +20,6 @@ export const queries: graphqlQueries = {
         }
       }
       `,
-      hash: '901ce207b61b5e401bf57a9fdb2fae36f4a62568d0573707b55545258777b436'
     },
     'getAboutUsNode': {
       query: gql`
@@ -39,7 +38,34 @@ export const queries: graphqlQueries = {
         }
       }
       `,
-      hash: '',
+    },
+    'getArticlesSummary': {
+      query: gql`
+      query getArticlesSummary($limit: Int, $offset: Int){
+        collection: nodeQuery(
+        limit: $limit,
+        offset: $offset,
+        sort: {direction: ASC, field: "created"},
+        filter: {conditions: [{field: "type", value: "article"}, {field: "status", value: "1"}]}) {
+        __typename
+          entities {
+            __typename
+            ... on NodeArticle {
+              __typename
+              title
+              body {
+                __typename
+                summary
+              }
+              fieldImage {
+                __typename
+                url
+              }
+              created
+            }
+          }
+        }
+      }`
     }
   }
 };
