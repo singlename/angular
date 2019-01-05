@@ -1,6 +1,5 @@
-import {Component, ElementRef, Injectable, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, ElementRef, Injectable, OnInit, ViewChild} from '@angular/core';
 import {GraphqlModule} from '../../graphql-module/graphql-module.module';
-import {count} from "rxjs-compat/operator/count";
 import {Article} from "./article/article.component";
 
 @Component({
@@ -38,6 +37,7 @@ export class HomeComponent implements OnInit {
     this.contentLoading = true;
     this.graphql.getQueryResult(OperationName, parametric, params)
       .subscribe(result => {
+        console.log(result);
         this.articles = this.articles.concat(result.data.collection.entities);
         if (!result.fromCache) {
           this.graphql.cacheQueryResult(OperationName, parametric, result.data);

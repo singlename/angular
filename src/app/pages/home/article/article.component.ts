@@ -1,9 +1,13 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {SafeHtml} from "@angular/platform-browser";
 
 export interface Article{
   title: string,
-  body: {summary: SafeHtml},
+  entityId: number,
+  body: {
+    summary?: SafeHtml,
+    value?: SafeHtml
+  },
   created: number,
   fieldImage: {
     url: string
@@ -15,12 +19,8 @@ export interface Article{
   templateUrl: './article.component.html',
   styleUrls: ['./article.component.css']
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent {
 
   @Input() article: Article;
   constructor() { }
-
-  ngOnInit() {
-  }
-
 }

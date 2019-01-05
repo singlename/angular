@@ -4,14 +4,15 @@ import gql from "graphql-tag";
 export interface QueryParams extends Object{
   limit?: number,
   offset?: number,
+  id?: number
 }
 
 export const queries: graphqlQueries = {
   queries: {
-    'getHomeNodeQuery': {
+    'getNodeQuery': {
       query: gql`
-      query getHomeNodeQuery{
-        nodeById(id: "1") {
+      query getNodeQuery($id: Int){
+        nodeById(id: $id) {
           title
           entityPublished
           promote
@@ -21,6 +22,7 @@ export const queries: graphqlQueries = {
               value
               __typename
             }
+            created
           }
         }
       }
@@ -54,14 +56,11 @@ export const queries: graphqlQueries = {
         filter: {conditions: [{field: "type", value: "article"}, {field: "status", value: "1"}]}) {
         __typename
           entities {
+            entityId
             __typename
             ... on NodeArticle {
               __typename
               title
-              body {
-                __typename
-                summary
-              }
               fieldImage {
                 __typename
                 url
@@ -71,6 +70,6 @@ export const queries: graphqlQueries = {
           }
         }
       }`
-    }
+    },
   }
 };

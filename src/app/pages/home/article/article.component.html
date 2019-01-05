@@ -1,8 +1,7 @@
 <div class="article">
-  <h2>{{article.title}}</h2>
-  <img src="{{article.fieldImage.url}}">
-  <div class="date">{{article.created | date:'short'}}</div>
-  <div class="content">
-    {{article.body.summary}}
-  </div>
+    <a [routerLink]="['/article', article.entityId]">
+        <img src="{{article.fieldImage.url}}">
+        <h2>{{article.title}}</h2>
+    </a>
+    <div class="date">{{article.created | date:'short'}}</div>
 </div>

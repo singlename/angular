@@ -3,7 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
 import {GraphqlModule} from './graphql-module/graphql-module.module';
-import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
 import {HomeComponent} from './pages/home/home.component';
 import {AboutComponent} from './pages/about/about.component';
 import {PageNotFoundComponent} from './pages/page-not-found/page-not-found.component';
@@ -17,13 +16,15 @@ import {HttpLinkModule} from 'apollo-angular-link-http';
 import {BatchHttpLink} from 'apollo-link-batch-http';
 import {GraphqlFetchDataService} from './services/graphql-fetch-data.service';
 import { ArticleComponent } from './pages/home/article/article.component';
-import {KeyValuePipe} from "@angular/common";
+import {ApolloModule} from "apollo-angular";
+import { ArticleFullPageComponent } from './pages/home/article/article-full-page/article-full-page.component';
 
 const appRoutes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'about-us', component: AboutComponent},
   {path: 'sign-up', component: FormProcessComponent},
+  {path: 'article/:id', component: ArticleFullPageComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 
@@ -35,7 +36,8 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     MainMenuComponent,
     FormProcessComponent,
-    ArticleComponent
+    ArticleComponent,
+    ArticleFullPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,19 +54,6 @@ const appRoutes: Routes = [
       provide: BatchHttpLink,
       // useValue: [{batchInterval: 10}, {batchMax: 10}]
     },
-    // GraphqlFetchDataService,
-    // {
-    //   provide: APOLLO_OPTIONS,
-    //   useFactory(httpLink: HttpLink) {
-    //     return {
-    //       cache: new InMemoryCache(),
-    //       link: httpLink.create({
-    //         uri: "http://mylandoapp.lndo.site/graphql"
-    //       })
-    //     }
-    //   },
-    //   deps: [HttpLink]
-    // }
   ],
   bootstrap: [AppComponent]
 })

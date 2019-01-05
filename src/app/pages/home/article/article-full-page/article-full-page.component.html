@@ -1,0 +1,7 @@
+<div *ngIf="article" class="article-full-page content">
+    <h1>{{article.title}}</h1>
+  <div class="date">{{article.created | date:'short'}}</div>
+  <div class="content">
+    {{article.body.value}}
+  </div>
+</div>
