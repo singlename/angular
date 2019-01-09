@@ -37,7 +37,6 @@ export class HomeComponent implements OnInit {
     this.contentLoading = true;
     this.graphql.getQueryResult(OperationName, parametric, params)
       .subscribe(result => {
-        console.log(result);
         this.articles = this.articles.concat(result.data.collection.entities);
         if (!result.fromCache) {
           this.graphql.cacheQueryResult(OperationName, parametric, result.data);

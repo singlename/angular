@@ -20,11 +20,10 @@ import {ApolloModule} from "apollo-angular";
 import { ArticleFullPageComponent } from './pages/home/article/article-full-page/article-full-page.component';
 
 const appRoutes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
+  {path: '', component: HomeComponent},
   {path: 'about-us', component: AboutComponent},
   {path: 'sign-up', component: FormProcessComponent},
-  {path: 'article/:id', component: ArticleFullPageComponent},
+  {path: 'article/:path', component: ArticleFullPageComponent},
   {path: '**', component: PageNotFoundComponent}
 ];
 

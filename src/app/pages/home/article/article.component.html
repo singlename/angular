@@ -1,5 +1,5 @@
 <div class="article">
-    <a [routerLink]="['/article', article.entityId]">
+    <a [routerLink]="[article.entityUrl.path]">
         <img src="{{article.fieldImage.url}}">
         <h2>{{article.title}}</h2>
     </a>

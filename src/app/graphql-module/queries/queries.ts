@@ -9,6 +9,28 @@ export interface QueryParams extends Object{
 
 export const queries: graphqlQueries = {
   queries: {
+    'getArticleByRoute': {
+      query: gql`
+      query getArticleByRoute($path: String) {
+        route(path: $path) {
+          __typename
+          ... on InternalUrl {
+            __typename
+            nodeContext {
+              __typename
+              entityId
+              ... on NodeArticle {
+                title
+                body {
+                  value
+                  __typename
+                }
+              }
+            }
+          }
+        }
+      }`
+    },
     'getNodeQuery': {
       query: gql`
       query getNodeQuery($id: Int){
@@ -21,6 +43,10 @@ export const queries: graphqlQueries = {
             body {
               value
               __typename
+            }
+            entityUrl {
+							__typename
+              path
             }
             created
           }
@@ -64,6 +90,10 @@ export const queries: graphqlQueries = {
               fieldImage {
                 __typename
                 url
+              }
+              entityUrl {
+							  __typename
+                path
               }
               created
             }

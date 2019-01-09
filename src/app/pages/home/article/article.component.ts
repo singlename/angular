@@ -11,6 +11,9 @@ export interface Article{
   created: number,
   fieldImage: {
     url: string
+  },
+  entityUrl: {
+    path: string
   }
 }
 
