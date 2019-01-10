@@ -28,17 +28,21 @@ export class ArticleFullPageComponent implements OnInit, OnDestroy {
     const params: Object = {
       path: path
     };
-    let parametric: string = 'path:' + path;
+    let parametric: string = 'path' + path.replace("\\", "--");
     const OperationName = 'getArticleByRoute';
     this.graphql.getQueryResult(OperationName, parametric, params)
       .subscribe(result => {
+        if (result.fromCache) {
+          this.article = result.data;
+          return;
+        }
         if (!result.data.route) {
           this.router.navigateByUrl('page-was-not-found');
           return;
         }
         this.article = result.data.route.nodeContext;
-        if (!result.fromCache) {
-          this.graphql.cacheQueryResult(OperationName, parametric, result.data);
+        if (result.data.route && !result.fromCache) {
+          this.graphql.cacheQueryResult(OperationName, parametric, result.data, result.data.route.nodeContext);
         }
       });
   }

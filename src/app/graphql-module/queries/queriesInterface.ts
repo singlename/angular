@@ -1,6 +1,6 @@
 export interface graphqlQuery {
-  operationName?: string;
   query: string;
+  fragment?: string;
 }
 
 export interface graphqlQueries {

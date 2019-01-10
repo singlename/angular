@@ -8,6 +8,7 @@ import {ApolloLink, from, NextLink, Operation} from 'apollo-link';
 import {BatchHttpLink} from 'apollo-link-batch-http';
 import {Observable} from "apollo-client/util/Observable";
 import {fragmentMatcher} from "./fragment-macher";
+import gql from "graphql-tag";
 
 const backend_endpoint = 'http://d8-wa.dd:8083/graphql';
 
@@ -78,20 +79,32 @@ export class GraphqlFetchDataService {
     const graphqlQuery = this.getGraphqlQuery(operationName);
     const apolloClient = this.apollo.getClient();
 
-    const cachedResponse = apolloClient.cache.read({
-      query: graphqlQuery.query,
-      optimistic: true,
-      rootId: operationName + parametric,
-    });
-
+    let cachedResponse = {};
+    if (graphqlQuery.fragment) {
+      cachedResponse = apolloClient.readFragment({
+        fragment: gql(this.getGraphqlQuery(graphqlQuery.fragment).query),
+        fragmentName: graphqlQuery.fragment,
+        id: operationName.concat(parametric),
+      });
+    }
+    else {
+      cachedResponse = apolloClient.cache.read({
+        query: gql(graphqlQuery.query),
+        optimistic: true,
+        rootId: operationName + parametric,
+      });
+    }
     if (cachedResponse) {
       return Observable.of({data: cachedResponse, fromCache: true});
     }
 
     let payload: GraphQLRequestPayload = {
-      query: graphqlQuery.query,
+      query: gql(graphqlQuery.query),
       operationName: operationName,
     };
+    if (graphqlQuery.fragment) {
+      payload.query = gql(graphqlQuery.query.concat(this.getGraphqlQuery(graphqlQuery.fragment).query));
+    }
     payload.variables = params;
     return apolloClient.__requestRaw(payload);
   }

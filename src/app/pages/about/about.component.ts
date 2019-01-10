@@ -25,7 +25,7 @@ export class AboutComponent implements OnInit {
         this.title = result.data.nodeById.title;
         this.body = result.data.nodeById.body.value;
         if (!result.fromCache) {
-          this.graphql.cacheQueryResult(OperationName, parametric, result.data);
+          this.graphql.cacheQueryResult(OperationName, parametric, result.data, {});
         }
       });
   }

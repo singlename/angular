@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
       .subscribe(result => {
         this.articles = this.articles.concat(result.data.collection.entities);
         if (!result.fromCache) {
-          this.graphql.cacheQueryResult(OperationName, parametric, result.data);
+          this.graphql.cacheQueryResult(OperationName, parametric, result.data, {});
         }
         this.contentLoading = false;
       });

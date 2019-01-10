@@ -1,5 +1,4 @@
 import {graphqlQueries} from './queriesInterface';
-import gql from "graphql-tag";
 
 export interface QueryParams extends Object{
   limit?: number,
@@ -10,7 +9,7 @@ export interface QueryParams extends Object{
 export const queries: graphqlQueries = {
   queries: {
     'getArticleByRoute': {
-      query: gql`
+      query: `
       query getArticleByRoute($path: String) {
         route(path: $path) {
           __typename
@@ -18,21 +17,26 @@ export const queries: graphqlQueries = {
             __typename
             nodeContext {
               __typename
-              entityId
-              ... on NodeArticle {
-                title
-                body {
-                  value
-                  __typename
-                }
-              }
+              ...NodeBasicData
             }
           }
+        }
+      }`,
+      fragment: 'NodeBasicData'
+    },
+    'NodeBasicData': {
+      query: `
+      fragment NodeBasicData on NodeArticle {
+        __typename
+        title
+        body {
+          value
+          __typename
         }
       }`
     },
     'getNodeQuery': {
-      query: gql`
+      query: `
       query getNodeQuery($id: Int){
         nodeById(id: $id) {
           title
@@ -55,7 +59,7 @@ export const queries: graphqlQueries = {
       `,
     },
     'getAboutUsNode': {
-      query: gql`
+      query: `
       query getAboutUsNode{
         nodeById(id: "2") {
           title
@@ -73,7 +77,7 @@ export const queries: graphqlQueries = {
       `,
     },
     'getArticlesSummary': {
-      query: gql`
+      query: `
       query getArticlesSummary($limit: Int, $offset: Int){
         collection: nodeQuery(
         limit: $limit,
