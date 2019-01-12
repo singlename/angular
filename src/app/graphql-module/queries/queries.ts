@@ -58,6 +58,32 @@ export const queries: graphqlQueries = {
       }
       `,
     },
+    'getAdvertisingBlockContent': {
+      query: `
+      query getAdvertisingBlockContent() {
+        {
+          blockContentQuery(offset: 0, limit: 5, filter: {conditions: [{field: "status", value: "1"}]}) {
+            count
+            __typename
+            entities {
+              __typename
+              ...AdvertisingBlockContent
+            }
+          }
+        }
+      }`,
+      fragment: 'AdvertisingBlockContent'
+    },
+    'AdvertisingBlockContent': {
+      query: `
+      fragment AdvertisingBlockContent on BlockContentAdvertisingBlock {
+        __typename
+        body {
+          value
+          __typename
+        }
+      }`,
+    },
     'getAboutUsNode': {
       query: `
       query getAboutUsNode{
@@ -105,5 +131,23 @@ export const queries: graphqlQueries = {
         }
       }`
     },
+    'getBlocksByURL': {
+      query: `
+      query getBlocksByURL($path: String, $region: String) {
+        {
+          route(path: $path) {
+            ... on InternalUrl {
+              blocksByRegion(region: $region) {
+                ... on BlockContentAdvertisingBlock {
+                  body {
+                    value
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`
+    }
   }
 };

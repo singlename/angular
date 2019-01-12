@@ -47,6 +47,10 @@ export class ArticleFullPageComponent implements OnInit, OnDestroy {
       });
   }
 
+  formatArticle(source: string) {
+    return source.replace('src="', '');
+  }
+
   ngOnInit() {
   }
 

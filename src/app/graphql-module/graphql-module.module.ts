@@ -33,7 +33,6 @@ export class GraphqlModule {
     let query = request.query;
     if (request.fragment && fragmentData) {
       query = this.getQuery(request.fragment).query;
-      console.log(query);
       this.apolloService.apollo.getClient().cache.writeFragment({
         fragmentName: request.fragment,
         fragment: gql(query),
