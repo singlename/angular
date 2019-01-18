@@ -14,7 +14,6 @@ export class HomeComponent implements OnInit {
   body: any;
   contentLoading: boolean = false;
   articles: Array<Article>;
-  @ViewChild('dynamicContent') dynamicContent:ElementRef;
 
   constructor(private graphql: GraphqlModule) {
     this.articles = [];

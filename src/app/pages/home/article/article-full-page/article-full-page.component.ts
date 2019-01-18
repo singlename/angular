@@ -3,6 +3,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {GraphqlModule} from "../../../../graphql-module/graphql-module.module";
 import {Article} from "../article.component";
 
+import { environment } from '../../../../../environments/environment';
+
 @Component({
   selector: 'app-article-full-page',
   templateUrl: './article-full-page.component.html',
@@ -11,7 +13,10 @@ import {Article} from "../article.component";
 export class ArticleFullPageComponent implements OnInit, OnDestroy {
 
   article: Article;
-  constructor(private route: ActivatedRoute, private graphql: GraphqlModule, private  router: Router) {
+  constructor(
+    private route: ActivatedRoute,
+    private graphql: GraphqlModule,
+    private  router: Router) {
     this.route.params.subscribe(params => {
       this.loadArticle('/article/' + params['path']);
     });
@@ -40,6 +45,7 @@ export class ArticleFullPageComponent implements OnInit, OnDestroy {
           this.router.navigateByUrl('page-was-not-found');
           return;
         }
+        result.data.route.nodeContext.body.value = this.formatHTML(result.data.route.nodeContext.body.value);
         this.article = result.data.route.nodeContext;
         if (result.data.route && !result.fromCache) {
           this.graphql.cacheQueryResult(OperationName, parametric, result.data, result.data.route.nodeContext);
@@ -47,8 +53,9 @@ export class ArticleFullPageComponent implements OnInit, OnDestroy {
       });
   }
 
-  formatArticle(source: string) {
-    return source.replace('src="', '');
+  formatHTML(source: string) {
+    const replacement = 'src="'.concat(environment.backend_endpoint);
+    return source.replace('src="', replacement);
   }
 
   ngOnInit() {

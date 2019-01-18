@@ -4,13 +4,11 @@ import {queries, QueryParams} from '../graphql-module/queries/queries';
 import {createPersistedQueryLink} from 'apollo-link-persisted-queries';
 import {Apollo} from 'apollo-angular';
 import {createHttpLink} from 'apollo-link-http';
-import {ApolloLink, from, NextLink, Operation} from 'apollo-link';
-import {BatchHttpLink} from 'apollo-link-batch-http';
+import {ApolloLink, GraphQLRequest, NextLink, Operation} from 'apollo-link';
 import {Observable} from "apollo-client/util/Observable";
 import {fragmentMatcher} from "./fragment-macher";
 import gql from "graphql-tag";
-
-const backend_endpoint = 'http://d8-wa.dd:8083/graphql';
+import {environment} from "../../environments/environment";
 
 export interface GraphQLRequestPayload {
   query: any,
@@ -29,7 +27,7 @@ export class GraphqlFetchDataService {
 
   constructor(
     private apollo: Apollo) {
-
+    const backend_endpoint = environment.backend_endpoint.concat('/graphql');
     const cache = new InMemoryCache({fragmentMatcher});
 
     const endpointHttpLink = createHttpLink({uri: backend_endpoint, useGETForQueries: true});
@@ -74,18 +72,41 @@ export class GraphqlFetchDataService {
     return queries.queries[operationName];
   }
 
+  returnCachedFragment(apolloClient, cacheParameters, index, cachedResponse) {
+    const originalId = cacheParameters.id;
+    cacheParameters.id = cacheParameters.id.concat(index);
+    let response = apolloClient.readFragment(cacheParameters);
+    cacheParameters.id = originalId;
+    if (response) {
+      cachedResponse = (cachedResponse) ? cachedResponse : [];
+      cachedResponse.push(response);
+      index++;
+      return this.returnCachedFragment(apolloClient, cacheParameters, index, cachedResponse);
+    }
+    return cachedResponse;
+  }
+
   getGraphqlQueryResult(operationName: string, parametric: string, params: QueryParams) {
 
     const graphqlQuery = this.getGraphqlQuery(operationName);
     const apolloClient = this.apollo.getClient();
 
-    let cachedResponse = {};
+    let cachedResponse: any;
     if (graphqlQuery.fragment) {
-      cachedResponse = apolloClient.readFragment({
+      let cacheParameters = {
         fragment: gql(this.getGraphqlQuery(graphqlQuery.fragment).query),
         fragmentName: graphqlQuery.fragment,
         id: operationName.concat(parametric),
-      });
+      };
+      if (graphqlQuery.resultIsMultipleFragments) {
+        //try read multiple fragments
+        let index = 0;
+        let cachedResponse: any;
+        cachedResponse = this.returnCachedFragment(apolloClient, cacheParameters, index, cachedResponse);
+      }
+      else {
+        cachedResponse = apolloClient.readFragment(cacheParameters);
+      }
     }
     else {
       cachedResponse = apolloClient.cache.read({

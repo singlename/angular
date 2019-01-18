@@ -1,6 +1,4 @@
 import {NgModule} from '@angular/core';
-
-
 import {AppComponent} from './app.component';
 import {GraphqlModule} from './graphql-module/graphql-module.module';
 import {HomeComponent} from './pages/home/home.component';
@@ -13,11 +11,12 @@ import {FormProcessComponent} from './pages/form-process/form-process.component'
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {HttpLinkModule} from 'apollo-angular-link-http';
-import {BatchHttpLink} from 'apollo-link-batch-http';
 import {GraphqlFetchDataService} from './services/graphql-fetch-data.service';
 import { ArticleComponent } from './pages/home/article/article.component';
 import {ApolloModule} from "apollo-angular";
 import { ArticleFullPageComponent } from './pages/home/article/article-full-page/article-full-page.component';
+import { SidebarComponent } from './pages/home/sidebar/sidebar.component';
+import { FooterComponent } from './pages/home/footer/footer.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -37,6 +36,9 @@ const appRoutes: Routes = [
     FormProcessComponent,
     ArticleComponent,
     ArticleFullPageComponent,
+    SidebarComponent,
+    FooterComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -49,10 +51,6 @@ const appRoutes: Routes = [
   ],
   providers: [
     GraphqlFetchDataService,
-    {
-      provide: BatchHttpLink,
-      // useValue: [{batchInterval: 10}, {batchMax: 10}]
-    },
   ],
   bootstrap: [AppComponent]
 })

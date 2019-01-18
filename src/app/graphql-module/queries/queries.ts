@@ -1,6 +1,6 @@
 import {graphqlQueries} from './queriesInterface';
 
-export interface QueryParams extends Object{
+export interface QueryParams extends Object {
   limit?: number,
   offset?: number,
   id?: number
@@ -84,6 +84,16 @@ export const queries: graphqlQueries = {
         }
       }`,
     },
+    'BlockContentBasic': {
+      query: `
+      fragment BlockContentBasic on BlockContentBasic {
+        __typename
+        body {
+          value
+          __typename
+        }
+      }`,
+    },
     'getAboutUsNode': {
       query: `
       query getAboutUsNode{
@@ -108,7 +118,7 @@ export const queries: graphqlQueries = {
         collection: nodeQuery(
         limit: $limit,
         offset: $offset,
-        sort: {direction: ASC, field: "created"},
+        sort: {direction: DESC, field: "created"},
         filter: {conditions: [{field: "type", value: "article"}, {field: "status", value: "1"}]}) {
         __typename
           entities {
@@ -131,23 +141,24 @@ export const queries: graphqlQueries = {
         }
       }`
     },
-    'getBlocksByURL': {
+    'getBlocks': {
+      // @todo: modify to use multiple fragments
       query: `
-      query getBlocksByURL($path: String, $region: String) {
-        {
-          route(path: $path) {
-            ... on InternalUrl {
-              blocksByRegion(region: $region) {
-                ... on BlockContentAdvertisingBlock {
-                  body {
-                    value
-                  }
-                }
-              }
+      query getBlocks($path: String, $region: String) {
+      __typename
+        route(path: $path) {
+          __typename
+          ... on InternalUrl {
+            __typename
+            blocksByRegion(region: $region) {
+              __typename
+              ...AdvertisingBlockContent
             }
           }
         }
-      }`
+      }`,
+      fragment: 'AdvertisingBlockContent',
+      resultIsMultipleFragments: true,
     }
   }
 };

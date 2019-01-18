@@ -1,0 +1,3 @@
+<div *ngFor="let block of blocks" class="block">
+    <div *ngIf="block.body" class="content" [innerHTML]="block.body.value"></div>
+</div>
