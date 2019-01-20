@@ -31,7 +31,7 @@ export class GraphqlModule {
   cacheQueryResult(OperationName: string, parametric: string, response: any, fragmentData: any) {
     const request = this.getQuery(OperationName);
     let query = request.query;
-    if (request.fragment && fragmentData) {
+    if (request.fragment && fragmentData || OperationName == 'getBlocks') {
       query = this.getQuery(request.fragment).query;
       this.apolloService.apollo.getClient().cache.writeFragment({
         fragmentName: request.fragment,

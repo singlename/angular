@@ -16,7 +16,7 @@ import { ArticleComponent } from './pages/home/article/article.component';
 import {ApolloModule} from "apollo-angular";
 import { ArticleFullPageComponent } from './pages/home/article/article-full-page/article-full-page.component';
 import { SidebarComponent } from './pages/home/sidebar/sidebar.component';
-import { FooterComponent } from './pages/home/footer/footer.component';
+import { FooterComponent } from './pages/home/article/article-full-page/footer/footer.component';
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},

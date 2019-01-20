@@ -41,6 +41,8 @@ export class SidebarComponent implements OnInit {
         }
 
         if (!(result.data.route && result.data.route.blocksByRegion)) {
+          // cache empty response to avoid calling again
+          this.graphql.cacheQueryResult(OperationName, parametric.concat('0'), {}, {});
           return;
         }
 
