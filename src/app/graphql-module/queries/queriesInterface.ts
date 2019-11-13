@@ -5,5 +5,5 @@ export interface graphqlQuery {
 }
 
 export interface graphqlQueries {
-  queries:{[operationName: string]: graphqlQuery}
+  queries: {[operationName: string]: graphqlQuery};
 }

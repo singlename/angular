@@ -13,7 +13,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {HttpLinkModule} from 'apollo-angular-link-http';
 import {GraphqlFetchDataService} from './services/graphql-fetch-data.service';
 import { ArticleComponent } from './pages/home/article/article.component';
-import {ApolloModule} from "apollo-angular";
+import {ApolloModule} from 'apollo-angular';
 import { ArticleFullPageComponent } from './pages/home/article/article-full-page/article-full-page.component';
 import { SidebarComponent } from './pages/home/sidebar/sidebar.component';
 import { FooterComponent } from './pages/home/article/article-full-page/footer/footer.component';

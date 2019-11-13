@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {GraphqlModule} from "../../../../../graphql-module/graphql-module.module";
+import {GraphqlModule} from '../../../../../graphql-module/graphql-module.module';
 
 @Component({
   selector: 'app-footer',

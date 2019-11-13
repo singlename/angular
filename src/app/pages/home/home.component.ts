@@ -1,6 +1,7 @@
-import {Component, ElementRef, Injectable, OnInit, ViewChild} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 import {GraphqlModule} from '../../graphql-module/graphql-module.module';
-import {Article} from "./article/article.component";
+import {Article} from './article/article.component';
+import {DomSanitizer} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-home',
@@ -12,10 +13,10 @@ export class HomeComponent implements OnInit {
 
   title: string;
   body: any;
-  contentLoading: boolean = false;
+  contentLoading = false;
   articles: Array<Article>;
 
-  constructor(private graphql: GraphqlModule) {
+  constructor(private graphql: GraphqlModule, private sanitizer: DomSanitizer) {
     this.articles = [];
   }
 
@@ -24,10 +25,10 @@ export class HomeComponent implements OnInit {
       limit: limit,
       offset: offset
     };
-    let parametric: string = '';
-    for(let key in params){
-      if(params.hasOwnProperty(key)){
-        parametric+= key + params[key];
+    let parametric = '';
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        parametric += key + params[key];
       }
     }
 

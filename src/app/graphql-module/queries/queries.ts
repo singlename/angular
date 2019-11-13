@@ -1,9 +1,9 @@
 import {graphqlQueries} from './queriesInterface';
 
 export interface QueryParams extends Object {
-  limit?: number,
-  offset?: number,
-  id?: number
+  limit?: number;
+  offset?: number;
+  id?: number;
 }
 
 export const queries: graphqlQueries = {

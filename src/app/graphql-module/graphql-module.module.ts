@@ -2,8 +2,8 @@ import {Injectable, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {GraphqlFetchDataService} from '../services/graphql-fetch-data.service';
 import { introspectionQuery } from 'graphql';
-import {QueryParams} from "./queries/queries";
-import gql from "graphql-tag";
+import {QueryParams} from './queries/queries';
+import gql from 'graphql-tag';
 
 @NgModule({
   imports: [

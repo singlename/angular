@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from "@angular/router";
-import {GraphqlModule} from "../../../../graphql-module/graphql-module.module";
-import {Article} from "../article.component";
+import {ActivatedRoute, Router} from '@angular/router';
+import {GraphqlModule} from '../../../../graphql-module/graphql-module.module';
+import {Article} from '../article.component';
 
 import { environment } from '../../../../../environments/environment';
 
@@ -23,7 +23,7 @@ export class ArticleFullPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    //this.sub.unsubscribe();
+    // this.sub.unsubscribe();
   }
 
   loadArticle(path: string) {
@@ -33,7 +33,7 @@ export class ArticleFullPageComponent implements OnInit, OnDestroy {
     const params: Object = {
       path: path
     };
-    let parametric: string = 'path' + path.replace("\\", "--");
+    const parametric: string = 'path' + path.replace('\\', '--');
     const OperationName = 'getArticleByRoute';
     this.graphql.getQueryResult(OperationName, parametric, params)
       .subscribe(result => {

@@ -1,20 +1,20 @@
 import {Component, Input} from '@angular/core';
-import {SafeHtml} from "@angular/platform-browser";
+import {SafeHtml} from '@angular/platform-browser';
 
-export interface Article{
-  title: string,
-  entityId: number,
+export interface Article {
+  title: string;
+  entityId: number;
   body: {
     summary?: SafeHtml,
     value?: SafeHtml
-  },
-  created: number,
+  };
+  created: number;
   fieldImage: {
     url: string
-  },
+  };
   entityUrl: {
     path: string
-  }
+  };
 }
 
 @Component({

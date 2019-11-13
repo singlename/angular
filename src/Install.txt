@@ -1,0 +1,3 @@
+Install node.js, yarn
+run yarn
+yarn global add @angular/cli

@@ -5,21 +5,21 @@ import {createPersistedQueryLink} from 'apollo-link-persisted-queries';
 import {Apollo} from 'apollo-angular';
 import {createHttpLink} from 'apollo-link-http';
 import {ApolloLink, GraphQLRequest, NextLink, Operation} from 'apollo-link';
-import {Observable} from "apollo-client/util/Observable";
-import {fragmentMatcher} from "./fragment-macher";
-import gql from "graphql-tag";
-import {environment} from "../../environments/environment";
+import {Observable} from 'apollo-client/util/Observable';
+import {fragmentMatcher} from './fragment-macher';
+import gql from 'graphql-tag';
+import {environment} from '../../environments/environment';
 
 export interface GraphQLRequestPayload {
-  query: any,
-  operationName: string,
-  variables?: Object,
+  query: any;
+  operationName: string;
+  variables?: Object;
   extensions?: {
     persistedQuery?: {
       version: number,
       sha256Hash: string
     },
-  },
+  };
 }
 
 @Injectable()
@@ -36,7 +36,7 @@ export class GraphqlFetchDataService {
     });
 
     // @todo, swithc apollo to apollo client
-    //const endpointHttpBatchLink = new BatchHttpLink();
+    // const endpointHttpBatchLink = new BatchHttpLink();
 
     const queryPostMiddleware: ApolloLink = new ApolloLink(
       (operation: Operation, forward: NextLink) => {
@@ -64,7 +64,7 @@ export class GraphqlFetchDataService {
     this.apollo.create({
       link: link,
       cache,
-      //connectToDevTools: true //connects to Apollo extention for browser
+      // connectToDevTools: true //connects to Apollo extention for browser
     });
   }
 
@@ -75,7 +75,7 @@ export class GraphqlFetchDataService {
   returnCachedFragment(apolloClient, cacheParameters, index, cachedResponse) {
     const originalId = cacheParameters.id;
     cacheParameters.id = cacheParameters.id.concat(index);
-    let response = apolloClient.readFragment(cacheParameters);
+    const response = apolloClient.readFragment(cacheParameters);
     cacheParameters.id = originalId;
     if (response) {
       cachedResponse = (cachedResponse) ? cachedResponse : [];
@@ -93,22 +93,20 @@ export class GraphqlFetchDataService {
 
     let cachedResponse: any;
     if (graphqlQuery.fragment) {
-      let cacheParameters = {
+      const cacheParameters = {
         fragment: gql(this.getGraphqlQuery(graphqlQuery.fragment).query),
         fragmentName: graphqlQuery.fragment,
         id: operationName.concat(parametric),
       };
       if (graphqlQuery.resultIsMultipleFragments) {
-        //try read multiple fragments
-        let index = 0;
+        // try read multiple fragments
+        const index = 0;
         let cachedResponse: any;
         cachedResponse = this.returnCachedFragment(apolloClient, cacheParameters, index, cachedResponse);
-      }
-      else {
+      } else {
         cachedResponse = apolloClient.readFragment(cacheParameters);
       }
-    }
-    else {
+    } else {
       cachedResponse = apolloClient.cache.read({
         query: gql(graphqlQuery.query),
         optimistic: true,
@@ -116,16 +114,18 @@ export class GraphqlFetchDataService {
       });
     }
     if (cachedResponse) {
+      console.log('cached response', cachedResponse);
       return Observable.of({data: cachedResponse, fromCache: true});
     }
 
-    let payload: GraphQLRequestPayload = {
+    const payload: GraphQLRequestPayload = {
       query: gql(graphqlQuery.query),
       operationName: operationName,
     };
     if (graphqlQuery.fragment) {
       payload.query = gql(graphqlQuery.query.concat(this.getGraphqlQuery(graphqlQuery.fragment).query));
     }
+    console.log(operationName+ ' '+graphqlQuery.fragment);
     payload.variables = params;
     return apolloClient.__requestRaw(payload);
   }

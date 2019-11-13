@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {GraphqlModule} from "../../../graphql-module/graphql-module.module";
-import {environment} from "../../../../environments/environment";
+import {GraphqlModule} from '../../../graphql-module/graphql-module.module';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-sidebar',
@@ -24,10 +24,10 @@ export class SidebarComponent implements OnInit {
       path: path,
       region: region
     };
-    let parametric: string = '';
-    for(let key in params){
-      if(params.hasOwnProperty(key)){
-        parametric+= key + params[key];
+    let parametric = '';
+    for (const key in params) {
+      if (params.hasOwnProperty(key)) {
+        parametric += key + params[key];
       }
     }
 
@@ -49,7 +49,7 @@ export class SidebarComponent implements OnInit {
         this.blocks = result.data.route.blocksByRegion;
         if (result.data.route.blocksByRegion && !result.fromCache) {
           let index = 0;
-          for(let key in this.blocks) {
+          for (const key in this.blocks) {
             if (!this.blocks[key].body) {
               continue;
             }
