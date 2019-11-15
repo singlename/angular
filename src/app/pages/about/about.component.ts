@@ -13,7 +13,7 @@ export class AboutComponent implements OnInit {
 
   constructor(private graphql: GraphqlModule) {
 
-    this.title = 'Loading...';
+    this.title = '';
   }
 
   ngOnInit() {

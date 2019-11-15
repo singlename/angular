@@ -2,7 +2,6 @@
     <app-sidebar class="col-md-2" region="sidebar_first" path="<front>"></app-sidebar>
 
     <div class="col-md-8 main_content">
-        <h1>{{title}}</h1>
         <div class="content" id="dynamicContent" (window:scroll)="onScroll($event)" #dynamicContent>
             <app-article *ngFor="let article of articles" [article]="article"></app-article>
         </div>

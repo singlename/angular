@@ -139,7 +139,8 @@ export const queries: graphqlQueries = {
             }
           }
         }
-      }`
+      }
+      `,
     },
     'getBlocks': {
       // @todo: modify to use multiple fragments

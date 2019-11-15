@@ -125,7 +125,7 @@ export class GraphqlFetchDataService {
     if (graphqlQuery.fragment) {
       payload.query = gql(graphqlQuery.query.concat(this.getGraphqlQuery(graphqlQuery.fragment).query));
     }
-    console.log(operationName+ ' '+graphqlQuery.fragment);
+
     payload.variables = params;
     return apolloClient.__requestRaw(payload);
   }
