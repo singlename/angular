@@ -17,6 +17,7 @@ import {ApolloModule} from 'apollo-angular';
 import { ArticleFullPageComponent } from './pages/home/article/article-full-page/article-full-page.component';
 import { SidebarComponent } from './pages/home/sidebar/sidebar.component';
 import { FooterComponent } from './pages/home/article/article-full-page/footer/footer.component';
+import {SearchBarComponent} from "./pages/search-bar/search-bar.component";
 
 const appRoutes: Routes = [
   {path: '', component: HomeComponent},
@@ -38,6 +39,7 @@ const appRoutes: Routes = [
     ArticleFullPageComponent,
     SidebarComponent,
     FooterComponent,
+    SearchBarComponent,
 
   ],
   imports: [

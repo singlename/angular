@@ -1,6 +1,13 @@
-<ul class="row main-menu">
-  <li><a [routerLink] = "['']"><img src="/assets/logo/logo.jpg"></a></li>
-  <li><a [routerLink] = "['/sign-up']">Sign up</a></li>
-  <li><a [routerLink] = "['/about-us']">About us</a></li>
-</ul>
+<div class="row menu">
+  <div class="col-md-6">
+    <ul class="main-menu">
+      <li><a [routerLink]="['']"><img src="/assets/logo/logo.jpg"></a></li>
+      <li><a [routerLink]="['/sign-up']">Sign up</a></li>
+      <li><a [routerLink]="['/about-us']">About us</a></li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <app-search-bar></app-search-bar>
+  </div>
+</div>
 <router-outlet></router-outlet>
